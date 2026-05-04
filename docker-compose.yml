@@ -24,7 +24,6 @@ services:
     image: postgres:16-alpine
     container_name: taskmanager-db
     restart: unless-stopped
-    user: "999:999"  # postgres user
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
