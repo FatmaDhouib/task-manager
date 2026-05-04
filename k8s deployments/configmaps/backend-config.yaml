@@ -1,0 +1,17 @@
+# k8s/configmaps/backend-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: task-manager
+  labels:
+    app: task-manager
+    component: backend
+data:
+  PORT: "3000"
+  NODE_ENV: "production"
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "taskmanager"
+  API_VERSION: "v1"
+

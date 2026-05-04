@@ -1,0 +1,43 @@
+# k8s/configmaps/postgres-init.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-script
+  namespace: task-manager
+  labels:
+    app: task-manager
+    component: database
+data:
+  init.sql: |
+    -- Task Manager Database Schema
+    CREATE TABLE IF NOT EXISTS tasks (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        status VARCHAR(50) DEFAULT 'pending',
+        priority VARCHAR(50) DEFAULT 'medium',
+        due_date TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    
+    CREATE INDEX idx_tasks_status ON tasks(status);
+    CREATE INDEX idx_tasks_priority ON tasks(priority);
+    CREATE INDEX idx_tasks_created_at ON tasks(created_at);
+    
+    INSERT INTO tasks (title, description, status, priority, due_date) VALUES
+    ('Welcome to Task Manager', 'Get started with managing your tasks efficiently', 'pending', 'high', CURRENT_TIMESTAMP + INTERVAL '7 days'),
+    ('Explore the Dashboard', 'Check out all the features available', 'in-progress', 'medium', CURRENT_TIMESTAMP + INTERVAL '3 days');
+    
+    CREATE OR REPLACE FUNCTION update_updated_at_column()
+    RETURNS TRIGGER AS $$
+    BEGIN
+        NEW.updated_at = CURRENT_TIMESTAMP;
+        RETURN NEW;
+    END;
+    $$ language 'plpgsql';
+    
+    CREATE TRIGGER update_tasks_updated_at 
+        BEFORE UPDATE ON tasks 
+        FOR EACH ROW 
+        EXECUTE FUNCTION update_updated_at_column();

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📋 Task Manager</h1>
+
+    <!-- Add / Edit Task Form -->
+    <form id="task-form">
+      <input type="hidden" id="task-id" />
+      <div class="form-group">
+        <input type="text" id="task-title" placeholder="Task title" required />
+      </div>
+      <div class="form-group">
+        <textarea id="task-description" placeholder="Description (optional)" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <select id="task-status">
+          <option value="pending">Pending</option>
+          <option value="in_progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+      <button type="submit" id="submit-btn">Add Task</button>
+      <button type="button" id="cancel-btn" class="hidden">Cancel</button>
+    </form>
+
+    <!-- Task List -->
+    <div id="task-list"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# k8s/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: task-manager
+  labels:
+    app: task-manager
+    environment: production
+    tier: full-stack
