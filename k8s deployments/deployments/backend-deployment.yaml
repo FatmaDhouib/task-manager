@@ -29,7 +29,7 @@ spec:
         runAsGroup: 1001
       containers:
       - name: backend
-        image: taskmanager-backend:latest
+        image: tfatmadhouib/taskmanager-backend:v2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
